@@ -3,23 +3,9 @@
   
     
     <entry>
-      <title><![CDATA[python-jstree]]></title>
-      <url>%2F2017%2F01%2F28%2Fpython-jstree%2F</url>
-      <content type="text"></content>
-    </entry>
-
-    
-    <entry>
       <title><![CDATA[jstree 使用]]></title>
       <url>%2F2017%2F01%2F28%2Fflask-jstree%2F</url>
       <content type="text"><![CDATA[jstree、flask 前后端交互展示文件内容1、遍历目录生成 json 文件12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152import os import glob import json def fun(path,parent): global Id global jsonstr global count for i,fn in enumerate(glob.glob(path + os.sep + '*' )): if os.path.isdir(fn): jsonstr+='''&#123;"id":"'''+ str(Id)+'''","text":"'''+os.path.basename(fn)+'''","children":[''' parent=Id Id+=1 for j,li in enumerate(glob.glob(fn + os.sep + '*' )): if os.path.isdir(li): jsonstr+='''&#123;"id":"'''+ str(Id)+'''","text":"'''+os.path.basename(li)+'''","children":[''' parent=Id Id+=1 fun(li,parent) jsonstr+="]&#125;" if j&lt;len(glob.glob(fn + os.sep + '*' ))-1: jsonstr+="," else: jsonstr+='''&#123;"id":"'''+ str(Id)+'''","text":"'''+os.path.basename(li)+'''","icon":"fa fa-file-text-o"&#125;''' Id+=1 if j&lt;len(glob.glob(fn + os.sep + '*' ))-1: jsonstr+="," jsonstr+="]&#125;" if i&lt;len(glob.glob(path + os.sep + '*' ))-1: jsonstr+="," else: jsonstr+='''&#123;"id":"'''+ str(Id)+'''","text":"'''+os.path.basename(fn)+'''","icon":"fa fa-file-text-o"&#125;''' Id+=1 if i&lt;len(glob.glob(path + os.sep + '*' ))-1: jsonstr+="," return jsonstr path="/Users/gufy/Desktop/test/config" parent=0 Id=0 jsonstr="[" jsonstr=fun(path,0) jsonstr+="]" file_object = open('root.json', 'w') file_object.write(jsonstr) file_object.close() 2、后端路由实现12345678910@admin.route('/config_tree', methods=['GET', 'POST'])def config_tree(): path = "/Users/gufy/Desktop/root.json" file_object = open(path) try: infos = file_object.read() finally: file_object.close() print type(infos) return infos 3、前端1&lt;div id="using_json"&gt;&lt;/div&gt; 12345678$('#using_json').jstree(&#123; 'core' : &#123; 'data': &#123; "url" : "/config_tree", "dataType" : "json" &#125; &#125;&#125;) 需要注意的是返回的 json 双引号保持一致，不然 jstree 解析会失败]]></content>
-    </entry>
-
-    
-    <entry>
-      <title><![CDATA[Hello World]]></title>
-      <url>%2F2017%2F01%2F27%2Fhello-world%2F</url>
-      <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
     </entry>
 
     
